@@ -1,10 +1,16 @@
 package br.sia.dao;
 
-import br.sia.modelo.Pessoa;
+import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.TypedQuery;
 
-public class PessoaDao extends GenericDao {
+import br.sia.modelo.Pessoa;
+
+public class PessoaDao extends GenericDao implements Serializable  {
+
+
+	private static final long serialVersionUID = -7742479806055415888L;
 
 	public PessoaDao() {
         super(Pessoa.class);

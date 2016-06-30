@@ -3,6 +3,7 @@ package br.sia.modelo;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,6 +11,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,16 +25,12 @@ public class Pessoa  implements  Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "id")
+	@Column(name = "cod_pessoa")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idPessoa;
+	private Long codPessoa;
 
 	@Column(name = "nome")
 	private String nome;
-	
-	@Column(name = "status_matricula")
-	@Enumerated(EnumType.STRING)
-	private StatusMatricula statusMatricula;
 
 	@Column(name = "rg")
 	private String rg;
@@ -56,9 +55,20 @@ public class Pessoa  implements  Serializable{
 	@Column(name="estado_civil")
 	private String estadoCivil;
 	
-	public Pessoa (Long idPessoa,String nome,String rg, String cpf,Date dataNascimento,Date dataCadastro,Sexo sexo,String nacionalidade,String estadoCivil,
-					StatusMatricula statusMatricula){
-		this.idPessoa = idPessoa;
+	@Column(name = "profissao")
+	private String profissao;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "cod_endereco")
+	private Endereco endereco;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "cod_contato")
+	private Contato contato;
+	
+	public Pessoa (Long codPessoa,String nome,String rg, String cpf,Date dataNascimento,Date dataCadastro,Sexo sexo,String nacionalidade,String estadoCivil,
+					String profissao,Endereco endereco,Contato contato){
+		this.codPessoa = codPessoa;
 		this.nome = nome;
 		this.rg = rg;
 		this.cpf = cpf;
@@ -67,21 +77,21 @@ public class Pessoa  implements  Serializable{
 		this.sexo = sexo;
 		this.nacionalidade = nacionalidade;
 		this.estadoCivil = estadoCivil;
-		this.statusMatricula = statusMatricula;
+		this.profissao = profissao;
+		this.endereco = endereco;
+		this.contato = contato;
 	}
-//
-	public Long getIdPessoa() {
-		return idPessoa;
-	}
-
-	
 	
 	public Pessoa() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public void setIdPessoa(Long idPessoa) {
-		this.idPessoa = idPessoa;
+
+	public Long getCodPessoa() {
+		return codPessoa;
+	}
+
+	public void setCodPessoa(Long codPessoa) {
+		this.codPessoa = codPessoa;
 	}
 
 	public String getNome() {
@@ -145,14 +155,29 @@ public class Pessoa  implements  Serializable{
 	public void setEstadoCivil(String estadoCivil) {
 		this.estadoCivil = estadoCivil;
 	}
-	public StatusMatricula getStatusMatricula() {
-		return statusMatricula;
-	}
-	public void setStatusMatricula(StatusMatricula statusMatricula) {
-		this.statusMatricula = statusMatricula;
-	}
 	
-	
+	public String getProfissao() {
+		return profissao;
+	}
 
+	public void setProfissao(String profissao) {
+		this.profissao = profissao;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+	public Contato getContato() {
+		return contato;
+	}
+
+	public void setContato(Contato contato) {
+		this.contato = contato;
+	}
 	
 }
